@@ -16,12 +16,17 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            // $user = Auth::user();
-            if (Auth::user()->admin) {
+            $request->session()->regenerate();
+
+            $user = Auth::user();
+            
+            if ($user->admin) {
                 return redirect('/admin');
-            } elseif (Auth::user()->guru) {
+            } 
+            elseif ($user->guru) {
                 return redirect('/guru');
-            } elseif (Auth::user()->siswa) {
+            } 
+            elseif ($user->siswa) {
                 return redirect('/siswa');
             }
         }   
@@ -29,4 +34,14 @@ class LoginController extends Controller
             return redirect('')->withErrors('Username dan Password tidak sesuai')->withInput();
         }
     }    
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/');
+    }
 }

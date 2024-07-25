@@ -27,6 +27,7 @@ class UserSeeder extends Seeder
                 'email' => 'siswa@gmail.com',
                 'password' => bcrypt('siswa123')
             ]
+            
         ];
         User::insert($userdata);
     }
