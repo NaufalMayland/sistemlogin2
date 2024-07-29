@@ -29,6 +29,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 Route::middleware(['auth', 'guru_role'])->group(function () {
     Route::get('/guru', [GuruController::class, 'index']);
+    Route::get('/guru/tkompetensi', [GuruController::class, 'tkompetensi'])->name('guru.tkompetensi');
+
 });
 
 Route::middleware(['auth', 'role:siswa'])->group(function () {
